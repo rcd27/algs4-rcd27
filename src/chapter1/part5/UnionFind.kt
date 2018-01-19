@@ -4,33 +4,34 @@ class UnionFind(nodesAmount: Int) {
     /**
      *  В реализации этого алгоритма я бы отметил структуру
      *  хранения данных. Так как использована quick-find data structure,
-     *  т.е. id элемента = id в массиве, фиксированное число,
+     *  т.е. elements элемента = elements в массиве, фиксированное число,
      *  то для добавления параметра типа size создаётся массив такой
      *  же длины и заполняется единицами. Основной упор именно на
      *  структуру данных.
      */
 
     /* Компоненты */
-    private val id: IntArray = IntArray(nodesAmount)
-    /* Хранит размер компонентов*/
-    private val sz: IntArray = IntArray(nodesAmount)
+    internal val elements: IntArray = IntArray(nodesAmount)
+    /* Хранит размер компонентов (деревьев в частности) */
+    private val sizes: IntArray = IntArray(nodesAmount)
 
     init {
-        /* Заполнили элементы 1,2,3...N */
-        for (i in id) {
-            id[i] = i
+        /* Заполнили элементы 0,1,2...N-1 */
+        for (i in 0 until nodesAmount) { // FIXME: java-code
+            elements[i] = i
         }
+
         /* По дефолту, размер деревьев = 1 */
-        for (i in sz) {
-            sz[i] = 1
+        for (i in 0 until nodesAmount) {
+            sizes[i] = 1
         }
     }
 
-    private fun root(element: Int): Int {
+    fun root(element: Int): Int {
         var root = element
         /* Поднимается по дереву */
-        while (root != id[root]) {
-            root = id[root]
+        while (root != elements[root]) {
+            root = elements[root]
         }
         return root
     }
@@ -40,17 +41,17 @@ class UnionFind(nodesAmount: Int) {
     }
 
     fun union(p: Int, q: Int) {
-        val i = root(p) // корень для p
-        val j = root(q) // корень для q
+        val pRoot = root(p) // корень для p
+        val qRoot = root(q) // корень для q
 
-        if (i == j) return
+        if (pRoot == qRoot) return
 
-        if (sz[i] < sz[j]) { // если размер корня p < размера корня q
-            id[i] = j
-            sz[j] += sz[i]
-        } else {             // если размер корня p >= размер корня q
-            id[j] = i
-            sz[i] += sz[j]
+        if (sizes[pRoot] < sizes[qRoot]) {  // если размер дерева p < размера дерева q
+            elements[pRoot] = qRoot         // привязываем корень p к корню q
+            sizes[qRoot] += sizes[pRoot]    // размер корня q соотв. увеличивается
+        } else {                            // если размер дерева p >= размера дерева q
+            elements[qRoot] = pRoot         // наоборот
+            sizes[pRoot] += sizes[qRoot]
         }
     }
 }
