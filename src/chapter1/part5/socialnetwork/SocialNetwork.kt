@@ -18,10 +18,15 @@ class SocialNetwork(private val membersAmount: Int) {
             timestamps.add(timer.elapsedTime())
         }
     }
+
+    fun allAreFriends(): Boolean {
+        return members.connected(0, membersAmount - 1)
+    }
 }
 
 fun main(args: Array<String>) {
-    val sn = SocialNetwork(100000000)
+    val sn = SocialNetwork(10000000)
     sn.makeFriendships()
     println(sn.timestamps.last())
+    println("All are friends: ${sn.allAreFriends()}")
 }
