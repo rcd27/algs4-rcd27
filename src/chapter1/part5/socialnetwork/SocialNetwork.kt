@@ -9,8 +9,12 @@ class SocialNetwork(private val membersAmount: Int) {
 
     fun makeFriendships() {
         val timer = Stopwatch()
-        for (i in 0 until membersAmount - 1) {
+        for (i in 0 until membersAmount / 2) {
             members.union(i, i + 1) // from one side
+
+            val fromOtherSide = membersAmount - 1 - i
+            members.union(fromOtherSide, fromOtherSide - 1)
+
             timestamps.add(timer.elapsedTime())
         }
     }
