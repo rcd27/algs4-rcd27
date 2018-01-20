@@ -13,7 +13,6 @@ class SocialNetwork(private val membersAmount: Int) {
         for (i in 0 until membersAmount / 4) {
             /* Block #1 */
             members.union(i, i + 1) // from one side
-
             val b1fromOtherSide = membersAmount / 2 - 1 - i
             members.union(b1fromOtherSide, b1fromOtherSide - 1)
 
@@ -22,6 +21,7 @@ class SocialNetwork(private val membersAmount: Int) {
             val b2fromOtherSide = membersAmount / 1 - 1 - i
             members.union(b2fromOtherSide, b2fromOtherSide - 1)
 
+            /* union blocks */
             members.union(b1fromOtherSide, b2fromOtherSide)
 
             timestamps.add(timer.elapsedTime())
