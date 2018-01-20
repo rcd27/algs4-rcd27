@@ -1,4 +1,4 @@
-package chapter1.part5
+package chapter1.part5.unionfind
 
 class UnionFind(nodesAmount: Int) {
     /**
