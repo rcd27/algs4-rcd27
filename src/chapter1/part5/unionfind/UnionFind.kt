@@ -1,6 +1,6 @@
 package chapter1.part5.unionfind
 
-class UnionFind(nodesAmount: Int) {
+open class UnionFind(nodesAmount: Int) {
     /**
      *  В реализации этого алгоритма я бы отметил структуру
      *  хранения данных. Так как использована quick-find data structure,
@@ -40,7 +40,7 @@ class UnionFind(nodesAmount: Int) {
         return root(oneElement) == root(anotherElement)
     }
 
-    fun union(p: Int, q: Int) {
+    open fun union(p: Int, q: Int) {
         val pRoot = root(p) // корень для p
         val qRoot = root(q) // корень для q
 
