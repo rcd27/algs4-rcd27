@@ -1,7 +1,8 @@
-package chapter1.part5.socialnetwork
+package week.first.socialnetwork
 
-import chapter1.part5.unionfind.UnionFind
 import edu.princeton.cs.algs4.Stopwatch
+import week.first.unionfind.UnionFind
+import java.util.*
 
 class SocialNetwork(private val membersAmount: Int) {
     private val members = UnionFind(membersAmount)

@@ -1,4 +1,4 @@
-package chapter1.part5.successor
+package week.first.successor
 
 import java.lang.System.arraycopy
 

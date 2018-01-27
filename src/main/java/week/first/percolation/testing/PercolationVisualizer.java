@@ -1,4 +1,4 @@
-package chapter1.part5.percolation.testing; /******************************************************************************
+package week.first.percolation.testing; /******************************************************************************
  *  Compilation:  javac PercolationVisualizer.java
  *  Execution:    java PercolationVisualizer input.txt
  *  Dependencies: Percolation.java
@@ -18,7 +18,7 @@ package chapter1.part5.percolation.testing; /***********************************
 
 import java.awt.Font;
 
-import chapter1.part5.percolation.Percolation;
+import week.first.percolation.Percolation;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 

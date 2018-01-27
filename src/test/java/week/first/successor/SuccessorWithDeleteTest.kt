@@ -1,4 +1,4 @@
-package chapter1.part5.successor
+package week.first.successor
 
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test

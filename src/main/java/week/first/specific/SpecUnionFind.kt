@@ -1,6 +1,6 @@
-package chapter1.part5.specific
+package week.first.specific
 
-import chapter1.part5.unionfind.UnionFind
+import week.first.unionfind.UnionFind
 
 class SpecUnionFind(nodesAmount: Int) : UnionFind(nodesAmount) {
 

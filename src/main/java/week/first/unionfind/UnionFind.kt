@@ -1,4 +1,4 @@
-package chapter1.part5.unionfind
+package week.first.unionfind
 
 open class UnionFind(nodesAmount: Int) {
     /**

@@ -1,4 +1,4 @@
-package chapter1.part5.specific
+package week.first.specific
 
 import org.junit.Before
 import org.junit.Test
