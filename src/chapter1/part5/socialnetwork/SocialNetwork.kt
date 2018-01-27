@@ -21,6 +21,7 @@ class SocialNetwork(private val membersAmount: Int) {
             val b2fromOtherSide = membersAmount / 1 - 1 - i
             members.union(b2fromOtherSide, b2fromOtherSide - 1)
 
+            // FIXME: неверная логика. Объединение блоков не должно быть в цикле.
             /* union blocks */
             members.union(b1fromOtherSide, b2fromOtherSide)
 
