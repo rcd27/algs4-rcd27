@@ -34,7 +34,7 @@ To install `algs4.jar` for Maven project:
     </dependency>
     ```
 - Or just add it directly to the `pom.xml`:
-    ```
+    ``` xml
     <dependency>
         <groupId>edu.princeton.cs</groupId>
         <artifactId>algs4</artifactId>
