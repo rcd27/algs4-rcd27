@@ -8,7 +8,7 @@ Part I</a>
 
 #### Help
 To install `algs4.jar` for Maven project:
-- Download <a href="">jar-file</a>
+- Download <a href="https://algs4.cs.princeton.edu/code/algs4.jar">jar-file</a>
 - Install it in `.m2` (local Maven repository) so you will be able to use it in different projects:
     ```
     mvn install:install-file
