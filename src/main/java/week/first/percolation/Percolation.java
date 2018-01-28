@@ -1,12 +1,18 @@
 package week.first.percolation;
 
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
 /**
  * Методы должны быть линейной сложности и линейно обращаться к методам union-find
  */
 public class Percolation {
 
     private final int n;
-    private final int[] elements;
+    private final WeightedQuickUnionUF elements;
+    /* 0 - closed, 1 - open, 2 - filled */
+    private final int[] states;
+
+    private int openedSites;
 
     public Percolation(int n) { // сложность: n^2
         if (n > 0) {
@@ -16,37 +22,71 @@ public class Percolation {
             throw new IllegalArgumentException("n must be grater than 0");
         }
 
-        elements = new int[n];
-        for (int i = 0; i < n; i++) {
-            elements[i] = i;
-        }
+        elements = new WeightedQuickUnionUF(n * n);
+
+        states = new int[n * n]; // все ячейки изначально заблокированы (states.each{it==0})
     }
 
     /* Открывает ячейку, если та ещё не открыта */
-    public void open(int i, int j) {
-        //
+    public void open(int row, int col) {
+        checkNums(row, col);
+        int currentElement = get(row, col);
+        // если ячейка ещё не открыта
+        if (states[currentElement] == 0) {
+            // открываем ячейку
+            states[currentElement] = 1;
+
+            int[] neighbours = getNeighbours(currentElement);
+            // если граничит с верхним краем, заполняем
+            if (neighbours[2] < 0) {
+                states[currentElement] = 2;
+            }
+
+            // FIXME: неверно выполняется
+            // объединяем с открытыми соседями
+            for (int neighbour : neighbours) {
+                if (neighbour > 0 && states[neighbour - 1] > 0) {
+                    elements.union(neighbour - 1, currentElement);
+                    // если один из соседей заполнен, заполняем
+                    if (states[neighbour - 1] == 2) {
+                        states[currentElement] = 2;
+                    }
+                }
+            }
+            openedSites++;
+        }
     }
 
     public boolean isOpen(int row, int col) {
-        return false;
+        checkNums(row, col);
+        int currentElement = get(row, col);
+        return states[currentElement] > 0;
     }
 
     /* Открытая ячейка, соединённая с верхней гранью через цепь открытых соседей */
     public boolean isFull(int row, int col) {
-        return false;
+        checkNums(row, col);
+        int currentElement = get(row, col);
+        int rootForCurrentElement = elements.find(currentElement);
+        return states[rootForCurrentElement] == 2;
     }
 
     public int numberOfOpenSites() {
-        return 0;
+        return openedSites;
     }
 
     /* true, если есть full ячейки в нижнем ряду */
     public boolean percolates() {
+        int lastElement = n * n - 1;
+        for (int i = lastElement - n; i < lastElement; i++) {
+            if (states[i] == 2) {
+                return true;
+            }
+        }
         return false;
     }
 
-    // TODO убрать эти методы / скрыть видимость в private (если они вообще нужны)
-    protected int get(int row, int column) {
+    private int get(int row, int column) {
         if (row < 1 || column < 1) {
             throw new IllegalArgumentException("Row/Column number must be between 1 and n");
         }
@@ -56,11 +96,22 @@ public class Percolation {
         return n - c + r;
     }
 
-    protected boolean neighbours(int x, int y) {
-        int n1 = x - 1;
-        int n2 = x + 1;
-        int n3 = x - n;
-        int n4 = x + n;
-        return y == n1 || y == n2 || y == n3 || y == n4;
+    private int[] getNeighbours(int x) {
+        int n1 = x - 1; // сосед слева
+        int n2 = x + 1; // сосед справа
+        int n3 = x - n; // сосед сверху
+        int n4; // сосед снизу
+        if (x + n < n * n) {
+            n4 = x + n;
+        } else {
+            n4 = -1;
+        }
+        return new int[]{n1, n2, n3, n4};
+    }
+
+    private void checkNums(int row, int col) {
+        if (row < 1 || col < 1) {
+            throw new IllegalArgumentException("Row or column number must be grater than 0");
+        }
     }
 }

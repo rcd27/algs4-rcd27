@@ -2,30 +2,74 @@ package week.first.percolation;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PercolationTest {
 
     @Test
-    public void getTest() {
-        Percolation p = new Percolation(4);
-        assertEquals(0, p.get(1, 1));
-        assertEquals(3, p.get(1, 4));
-        assertEquals(5, p.get(2, 2));
-        assertEquals(15, p.get(4, 4));
+    public void constructor() {
+        try {
+            Percolation p = new Percolation(0);
+        } catch (IllegalArgumentException e) {
+            assertTrue(e.getClass() == IllegalArgumentException.class);
+        }
     }
 
     @Test
-    public void neighboursTest() {
-        Percolation p = new Percolation(4);
-        assertTrue(p.neighbours(0, 4));
-        assertFalse(p.neighbours(0, 5));
+    public void open() {
+        Percolation p = new Percolation(5);
+        p.open(1, 1);
+        assertTrue(p.isOpen(1, 1));
+        p.open(5, 5);
+        assertTrue(p.isOpen(5, 5));
 
-        assertTrue(p.neighbours(6, 5));
-        assertTrue(p.neighbours(6, 7));
-        assertTrue(p.neighbours(6, 2));
-        assertTrue(p.neighbours(6, 10));
+        assertFalse(p.isOpen(1, 5));
+    }
+
+    @Test
+    public void isFull_straight() {
+        Percolation p = new Percolation(2);
+        p.open(1, 1);
+        p.open(2, 2);
+        p.open(1, 2);
+
+        assertTrue(p.isFull(2, 2));
+    }
+
+    @Test
+    public void percolates_true() {
+        Percolation p = new Percolation(2);
+        p.open(1, 1);
+        p.open(2, 2);
+        p.open(1, 2);
+
+        assertTrue(p.percolates());
+    }
+
+    @Test
+    public void percolates_false() {
+        Percolation p = new Percolation(3);
+        p.open(1, 1);
+        p.open(1, 2);
+
+        assertFalse(p.percolates());
+    }
+
+    @Test
+    public void isFull_secondInFirstRow() {
+        Percolation p = new Percolation(2);
+        p.open(1, 1);
+        p.open(1, 2);
+        assertTrue(p.isOpen(1, 2));
+        assertTrue(p.isFull(1, 2));
+    }
+
+    @Test
+    public void isFull_secondInFirstColumn() {
+        Percolation p = new Percolation(2);
+        p.open(2, 1);
+        p.open(2, 2);
+        assertTrue(p.isFull(2,2));
     }
 }

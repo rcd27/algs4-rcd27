@@ -1,6 +1,5 @@
 package week.first.percolation;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class PercolationStats {
 
     private final int n;
