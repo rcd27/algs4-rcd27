@@ -143,6 +143,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>8.7</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>${project.basedir}/conf/checkstyle-coursera.xml</configLocation>
+                    <failOnViolation>false</failOnViolation>
+                    <outputDirectory>${project.basedir}/reports/</outputDirectory>
+                    <logViolationsToConsole>true</logViolationsToConsole>
+                    <outputFileFormat>xml</outputFileFormat>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>analyze-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
