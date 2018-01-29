@@ -2,7 +2,6 @@ package week.first.percolation;
 
 public class PercolationStats {
 
-    private final int n;
     private final int trials;
 
     public PercolationStats(int n, int trials) {
@@ -10,7 +9,6 @@ public class PercolationStats {
             throw new IllegalArgumentException("Number of n and trials must be greater than 0");
         }
 
-        this.n = n;
         this.trials = trials;
     }
 

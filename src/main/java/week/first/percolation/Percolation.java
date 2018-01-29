@@ -42,7 +42,11 @@ public class Percolation {
                 states[currentElement] = 2;
             }
 
+            // FIXME: не отрабатывает, когда незаполненный корень присоденияется к верхней грани
             for (int neighboor : neighbours) {
+                if (neighboor == -1) {
+                    states[currentElement] = 2;
+                }
                 if (neighboor >= 0 && neighboor < n * n) {
                     if (states[neighboor] == 1) {
                         elements.union(currentElement, neighboor);
@@ -50,6 +54,7 @@ public class Percolation {
                     if (states[neighboor] == 2) {
                         elements.union(neighboor, currentElement);
                         states[currentElement] = 2;
+                        states[elements.find(currentElement)] = 2;
                     }
                 }
             }
@@ -103,19 +108,24 @@ public class Percolation {
         if (x % n != 0) {
             n1 = x - 1;
         } else {
-            n1 = -1;
+            n1 = -100;
         }
 
         // сосед справа
         int n2;
-        if (x % n - 1 != 0) {
+        if (x % n != 0) {
             n2 = x + 1;
         } else {
-            n2 = -1;
+            n2 = -100;
         }
 
         // сосед сверху
-        int n3 = x - n;
+        int n3;
+        if (x - n >= 0) {
+            n3 = x - n;
+        } else {
+            n3 = -1;
+        }
 
         // сосед снизу
         int n4;
