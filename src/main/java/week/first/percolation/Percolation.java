@@ -47,14 +47,16 @@ public class Percolation {
                     states[currentElement] = 2;
                 }
                 if (neighboor >= 0 && neighboor < n * n) {
+                    // Если сосед открыт, объеденить элемент с соседом.
                     if (states[neighboor] == 1) {
                         elements.union(currentElement, neighboor);
                     }
+                    // Если сосед заполнен, заполнить элемент и объеденить с соседом
                     if (states[neighboor] == 2) {
-                        elements.union(neighboor, currentElement);
                         states[currentElement] = 2;
-                        states[elements.find(currentElement)] = 2;
+                        elements.union(neighboor, currentElement);
                     }
+                    // Если корень соседа открыт, а текущий элемент заполнен, заполнить корень соседа
                     if (states[elements.find(neighboor)] == 1 &&
                             states[currentElement] == 2) {
                         states[elements.find(neighboor)] = 2;
