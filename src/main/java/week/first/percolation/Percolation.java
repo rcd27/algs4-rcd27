@@ -88,7 +88,7 @@ public class Percolation {
     public boolean percolates() {
         int lastElement = n * n - 1;
         for (int i = lastElement - n; i < lastElement; i++) {
-            if (states[i] == 2) {
+            if (states[elements.find(i)] == 2) {
                 return true;
             }
         }
