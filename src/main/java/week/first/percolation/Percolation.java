@@ -42,17 +42,18 @@ public class Percolation {
                 states[currentElement] = 2;
             }
 
-            // FIXME: неверно выполняется
-            // объединяем с открытыми соседями
-            for (int neighbour : neighbours) {
-                if (neighbour > 0 && states[neighbour - 1] > 0) {
-                    elements.union(neighbour - 1, currentElement);
-                    // если один из соседей заполнен, заполняем
-                    if (states[neighbour - 1] == 2) {
+            for (int neighboor : neighbours) {
+                if (neighboor >= 0 && neighboor < n * n) {
+                    if (states[neighboor] == 1) {
+                        elements.union(currentElement, neighboor);
+                    }
+                    if (states[neighboor] == 2) {
+                        elements.union(neighboor, currentElement);
                         states[currentElement] = 2;
                     }
                 }
             }
+
             openedSites++;
         }
     }
@@ -60,15 +61,15 @@ public class Percolation {
     public boolean isOpen(int row, int col) {
         checkNums(row, col);
         int currentElement = get(row, col);
-        return states[currentElement] > 0;
+        return states[currentElement] >= 1;
     }
 
     /* Открытая ячейка, соединённая с верхней гранью через цепь открытых соседей */
     public boolean isFull(int row, int col) {
         checkNums(row, col);
         int currentElement = get(row, col);
-        int rootForCurrentElement = elements.find(currentElement);
-        return states[rootForCurrentElement] == 2;
+        int root = elements.find(currentElement);
+        return states[root] == 2;
     }
 
     public int numberOfOpenSites() {
@@ -97,10 +98,27 @@ public class Percolation {
     }
 
     private int[] getNeighbours(int x) {
-        int n1 = x - 1; // сосед слева
-        int n2 = x + 1; // сосед справа
-        int n3 = x - n; // сосед сверху
-        int n4; // сосед снизу
+        // сосед слева
+        int n1;
+        if (x % n != 0) {
+            n1 = x - 1;
+        } else {
+            n1 = -1;
+        }
+
+        // сосед справа
+        int n2;
+        if (x % n - 1 != 0) {
+            n2 = x + 1;
+        } else {
+            n2 = -1;
+        }
+
+        // сосед сверху
+        int n3 = x - n;
+
+        // сосед снизу
+        int n4;
         if (x + n < n * n) {
             n4 = x + n;
         } else {
