@@ -10,23 +10,25 @@ object Electronics : Category(freq = 1, avaragePrice = 1000)
 
 fun main(args: Array<String>) {
     val t = arrayListOf(Sigarettes, Electronics, Travel)
-    // Сортировка по убыванию частоты использования
-    t.sortByDescending { category: Category -> category.freq }
+
     println(proposeCategory(20, t))
 }
 
-fun proposeCategory(price: Int, t: ArrayList<Category>): Category {
+fun proposeCategory(price: Int, categories: ArrayList<Category>): Category {
+    // Сортировка по убыванию частоты использования
+    categories.sortByDescending { category: Category -> category.freq }
+
     // Я эту штуку назвал молярной массой.
     // Идея: придать вес той или иной категории.
     var mol = 0f
-    t.forEach {
+    categories.forEach {
         mol += it.freq
     }
-    mol /= t.size
+    mol /= categories.size
 
-    val delta = FloatArray(t.size)
+    val delta = FloatArray(categories.size)
     for (i in 0 until delta.size) {
-        val currentCat = t[i]
+        val currentCat = categories[i]
         // Тут формула, составленная империческим путём, иначе говоря, методом тыка.
         val currentDelta = Math.abs(price.minus(currentCat.avaragePrice))
                 .times(mol * currentCat.freq)
@@ -34,5 +36,5 @@ fun proposeCategory(price: Int, t: ArrayList<Category>): Category {
     }
     val minDeltaIndex = delta.indexOf(delta.min()!!)
 
-    return t[minDeltaIndex]
+    return categories[minDeltaIndex]
 }
