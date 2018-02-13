@@ -12,15 +12,25 @@ fun main(args: Array<String>) {
     val t = arrayListOf(Sigarettes, Electronics, Travel)
     // Сортировка по убыванию частоты использования
     t.sortByDescending { category: Category -> category.freq }
-    proposeCategory(50, t) // должно выдать Travel, так как дельта одинаковая, но Travel чаще встречается
+    println(proposeCategory(1500, t))
 }
 
+// FIXME: работает для Travel, Sigarretes и не работает для Category
 fun proposeCategory(price: Int, t: ArrayList<Category>): Category {
-
-    val delta = IntArray(t.size)
-    for (i in 0 until delta.size) {
-        val currentCat = t.get(i)
-        // TODO: расчитать дельту и выдать результат на её основании
+    var mol = 0f
+    t.forEach {
+        mol += it.freq
     }
-    return Travel
+    mol /= t.size
+
+    val delta = FloatArray(t.size)
+    for (i in 0 until delta.size) {
+        val currentCat = t[i]
+        val currentDelta = Math.abs(price.minus(currentCat.avaragePrice))
+                .div(currentCat.freq / mol)
+        delta[i] = currentDelta
+    }
+    val minDeltaIndex = delta.indexOf(delta.min()!!)
+
+    return t[minDeltaIndex]
 }
