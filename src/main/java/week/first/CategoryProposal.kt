@@ -4,6 +4,10 @@ import java.util.*
 
 open class Category(val freq: Int, val avaragePrice: Int)
 
+// Допустим, у нас есть данные о категориях, содержащие в себе поля
+// freq - частота использования
+// avaragePrice - средняя цена в данной категории
+//      (обновляется каждый раз, когда пользователь ввел новые данные)
 object Travel : Category(freq = 10, avaragePrice = 20)
 object Sigarettes : Category(freq = 5, avaragePrice = 80)
 object Electronics : Category(freq = 1, avaragePrice = 1000)
